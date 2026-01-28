@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://brightdata.com/favicon.svg" alt="Bright Data" width="80" height="80">
+  <img src="https://brightdata.com/wp-content/themes/brightdata/assets/images/favicon.png" alt="Bright Data" width="80" height="80">
 </p>
 
 <h1 align="center">Bright Data Plugin for Claude Code</h1>
