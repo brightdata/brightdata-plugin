@@ -1,0 +1,28 @@
+{
+  "name": "brightdata-plugin",
+  "description": "Web scraping and Google search skills powered by Bright Data APIs. Includes tools for scraping any webpage as markdown (with bot detection/CAPTCHA bypass) and searching Google with structured JSON results.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Bright Data",
+    "url": "https://brightdata.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brightdata/brightdata-plugin"
+  },
+  "homepage": "https://brightdata.com",
+  "license": "MIT",
+  "keywords": [
+    "web-scraping",
+    "search",
+    "serp",
+    "bright-data",
+    "web-unlocker",
+    "captcha-bypass",
+    "claude-code"
+  ],
+  "dependencies": {
+    "curl": ">=7.0.0",
+    "jq": ">=1.5"
+  }
+}
