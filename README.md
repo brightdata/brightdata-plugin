@@ -5,20 +5,21 @@
 <h1 align="center">Bright Data Plugin for Claude Code</h1>
 
 <p align="center">
-  <strong>Unlock the web with AI-powered scraping and search</strong>
+  <strong>Unlock the web with AI-powered scraping, search, and structured data</strong>
 </p>
 
 <p align="center">
   <a href="https://brightdata.com"><img src="https://img.shields.io/badge/Powered%20by-Bright%20Data-3D7FFC?style=for-the-badge" alt="Powered by Bright Data"></a>
   <a href="#license"><img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="MIT License"></a>
-  <a href="#skills"><img src="https://img.shields.io/badge/Skills-2-9D97F4?style=for-the-badge" alt="2 Skills"></a>
+  <a href="#skills"><img src="https://img.shields.io/badge/Skills-3-9D97F4?style=for-the-badge" alt="3 Skills"></a>
+  <a href="#data-feeds-skill"><img src="https://img.shields.io/badge/Datasets-40+-15C1E6?style=for-the-badge" alt="40+ Datasets"></a>
 </p>
 
 <p align="center">
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-skills">Skills</a> •
+  <a href="#-data-feeds">Data Feeds</a> •
   <a href="#-setup">Setup</a> •
-  <a href="#-usage">Usage</a> •
   <a href="#-examples">Examples</a>
 </p>
 
@@ -30,8 +31,9 @@ This plugin brings **Bright Data's powerful web infrastructure** directly into C
 
 - **Scrape any webpage** as clean markdown — bypassing bot detection, CAPTCHAs, and JavaScript rendering
 - **Search Google** with structured JSON results — titles, links, and descriptions ready for processing
+- **Extract structured data** from 40+ websites — Amazon, LinkedIn, Instagram, TikTok, YouTube, and more
 
-Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlocker) and [SERP API](https://brightdata.com/products/serp-api), this plugin handles the complexity of web access so your AI agents can focus on what matters.
+Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlocker), [SERP API](https://brightdata.com/products/serp-api), and [Web Data APIs](https://brightdata.com/products/web-scraper), this plugin handles the complexity of web access so your AI agents can focus on what matters.
 
 ---
 
@@ -41,6 +43,7 @@ Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlock
 |-------|-------------|
 | **`search`** | Search Google and get structured JSON results with titles, links, and descriptions |
 | **`scrape`** | Scrape any webpage as clean markdown with automatic bot detection bypass |
+| **`data-feeds`** | Extract structured data from 40+ websites with automatic polling |
 
 ---
 
@@ -68,6 +71,9 @@ bash skills/search/scripts/search.sh "artificial intelligence trends"
 
 # Scrape a webpage
 bash skills/scrape/scripts/scrape.sh "https://example.com/article"
+
+# Get LinkedIn profile data
+bash skills/data-feeds/scripts/datasets.sh linkedin_person_profile "https://linkedin.com/in/satyanadella"
 ```
 
 ---
@@ -96,7 +102,8 @@ brew install curl jq
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `BRIGHTDATA_API_KEY` | Yes | Your Bright Data API key from the [dashboard](https://brightdata.com/cp) |
-| `BRIGHTDATA_UNLOCKER_ZONE` | Yes | Name of your Web Unlocker zone |
+| `BRIGHTDATA_UNLOCKER_ZONE` | Yes* | Name of your Web Unlocker zone (*required for search/scrape) |
+| `BRIGHTDATA_POLLING_TIMEOUT` | No | Max seconds to wait for data-feeds (default: 600) |
 
 ---
 
@@ -137,16 +144,85 @@ Scrape any webpage and get clean markdown content.
 bash skills/scrape/scripts/scrape.sh "url"
 ```
 
-**Parameters:**
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `url` | Yes | Full URL of the page to scrape |
-
 **Features:**
 - Automatic bot detection bypass
 - CAPTCHA solving
 - JavaScript rendering
 - Clean markdown output
+
+### Data Feeds Skill
+
+Extract structured data from 40+ supported websites.
+
+```bash
+bash skills/data-feeds/scripts/datasets.sh <dataset_type> <url> [params...]
+```
+
+Run without arguments to see all available datasets:
+```bash
+bash skills/data-feeds/scripts/datasets.sh
+```
+
+---
+
+## Data Feeds
+
+### E-Commerce
+
+| Dataset | Command | Description |
+|---------|---------|-------------|
+| Amazon Product | `datasets.sh amazon_product <url>` | Product details, pricing, ratings |
+| Amazon Reviews | `datasets.sh amazon_product_reviews <url>` | Customer reviews |
+| Amazon Search | `datasets.sh amazon_product_search <keyword> <domain>` | Search results |
+| Walmart Product | `datasets.sh walmart_product <url>` | Product details |
+| eBay Product | `datasets.sh ebay_product <url>` | Listing details |
+| Best Buy | `datasets.sh bestbuy_products <url>` | Product info |
+| Etsy | `datasets.sh etsy_products <url>` | Listing data |
+| Home Depot | `datasets.sh homedepot_products <url>` | Product data |
+| Zara | `datasets.sh zara_products <url>` | Product details |
+
+### Professional Networks
+
+| Dataset | Command | Description |
+|---------|---------|-------------|
+| LinkedIn Person | `datasets.sh linkedin_person_profile <url>` | Profile, experience, skills |
+| LinkedIn Company | `datasets.sh linkedin_company_profile <url>` | Company page data |
+| LinkedIn Jobs | `datasets.sh linkedin_job_listings <url>` | Job posting details |
+| LinkedIn Posts | `datasets.sh linkedin_posts <url>` | Post content |
+| Crunchbase | `datasets.sh crunchbase_company <url>` | Funding, employees |
+| ZoomInfo | `datasets.sh zoominfo_company_profile <url>` | Company profile |
+
+### Social Media
+
+| Dataset | Command | Description |
+|---------|---------|-------------|
+| Instagram Profiles | `datasets.sh instagram_profiles <url>` | Bio, followers |
+| Instagram Posts | `datasets.sh instagram_posts <url>` | Post details |
+| Instagram Reels | `datasets.sh instagram_reels <url>` | Reel metrics |
+| TikTok Profiles | `datasets.sh tiktok_profiles <url>` | Creator data |
+| TikTok Posts | `datasets.sh tiktok_posts <url>` | Video details |
+| TikTok Shop | `datasets.sh tiktok_shop <url>` | Product data |
+| Facebook Posts | `datasets.sh facebook_posts <url>` | Post content |
+| Facebook Marketplace | `datasets.sh facebook_marketplace_listings <url>` | Listings |
+| X (Twitter) | `datasets.sh x_posts <url>` | Tweet data |
+| YouTube Profiles | `datasets.sh youtube_profiles <url>` | Channel data |
+| YouTube Videos | `datasets.sh youtube_videos <url>` | Video details |
+| YouTube Comments | `datasets.sh youtube_comments <url> [num]` | Comments |
+| Reddit Posts | `datasets.sh reddit_posts <url>` | Post data |
+
+### Other
+
+| Dataset | Command | Description |
+|---------|---------|-------------|
+| Google Maps Reviews | `datasets.sh google_maps_reviews <url> [days]` | Business reviews |
+| Google Shopping | `datasets.sh google_shopping <url>` | Product comparison |
+| Google Play Store | `datasets.sh google_play_store <url>` | App details |
+| Apple App Store | `datasets.sh apple_app_store <url>` | iOS app data |
+| Yahoo Finance | `datasets.sh yahoo_finance_business <url>` | Stock data |
+| Zillow | `datasets.sh zillow_properties_listing <url>` | Property listings |
+| Booking.com | `datasets.sh booking_hotel_listings <url>` | Hotel data |
+| Reuters News | `datasets.sh reuter_news <url>` | Article content |
+| GitHub | `datasets.sh github_repository_file <url>` | Repository file |
 
 ---
 
@@ -163,20 +239,29 @@ bash skills/scrape/scripts/scrape.sh "https://example.com/climate-article"
 
 ### Competitive Analysis
 ```bash
-# Find competitor pages
-bash skills/search/scripts/search.sh "best project management tools"
+# Get competitor product data
+bash skills/data-feeds/scripts/datasets.sh amazon_product "https://amazon.com/dp/B09V3KXJPB"
 
-# Scrape product details
-bash skills/scrape/scripts/scrape.sh "https://competitor.com/pricing"
+# Get company info
+bash skills/data-feeds/scripts/datasets.sh linkedin_company_profile "https://linkedin.com/company/openai"
 ```
 
-### Content Aggregation
+### Social Media Monitoring
 ```bash
-# Search for tutorials
-bash skills/search/scripts/search.sh "python web scraping tutorial" 0
+# Get Instagram profile
+bash skills/data-feeds/scripts/datasets.sh instagram_profiles "https://instagram.com/natgeo"
 
-# Get page 2
-bash skills/search/scripts/search.sh "python web scraping tutorial" 1
+# Get YouTube video stats
+bash skills/data-feeds/scripts/datasets.sh youtube_videos "https://youtube.com/watch?v=dQw4w9WgXcQ"
+```
+
+### Lead Generation
+```bash
+# Get LinkedIn profile
+bash skills/data-feeds/scripts/datasets.sh linkedin_person_profile "https://linkedin.com/in/satyanadella"
+
+# Get company funding data
+bash skills/data-feeds/scripts/datasets.sh crunchbase_company "https://crunchbase.com/organization/openai"
 ```
 
 ---
@@ -186,16 +271,21 @@ bash skills/search/scripts/search.sh "python web scraping tutorial" 1
 ```
 brightdata-plugin/
 ├── .claudeplugin/
-│   └── plugin.json          # Plugin configuration
+│   └── plugin.json              # Plugin configuration
 ├── skills/
 │   ├── search/
-│   │   ├── SKILL.md         # Search skill documentation
+│   │   ├── SKILL.md             # Search skill documentation
 │   │   └── scripts/
-│   │       └── search.sh    # Google search implementation
-│   └── scrape/
-│       ├── SKILL.md         # Scrape skill documentation
+│   │       └── search.sh        # Google search implementation
+│   ├── scrape/
+│   │   ├── SKILL.md             # Scrape skill documentation
+│   │   └── scripts/
+│   │       └── scrape.sh        # Web scraper implementation
+│   └── data-feeds/
+│       ├── SKILL.md             # Data feeds documentation
 │       └── scripts/
-│           └── scrape.sh    # Web scraper implementation
+│           ├── datasets.sh      # Dataset wrapper (40+ sources)
+│           └── fetch.sh         # Core polling logic
 ├── README.md
 └── LICENSE
 ```
@@ -204,7 +294,7 @@ brightdata-plugin/
 
 ## API Reference
 
-Both skills use the Bright Data Request API:
+### Search & Scrape (Web Unlocker API)
 
 ```
 POST https://api.brightdata.com/request
@@ -219,31 +309,46 @@ Content-Type: application/json
 }
 ```
 
-| data_format | Used by | Description |
-|-------------|---------|-------------|
-| `parsed_light` | Search | Returns structured SERP data |
-| `markdown` | Scrape | Returns page content as markdown |
+### Data Feeds (Web Data API)
+
+```
+POST https://api.brightdata.com/datasets/v3/trigger?dataset_id=<id>
+Authorization: Bearer <BRIGHTDATA_API_KEY>
+Content-Type: application/json
+
+[{"url": "<target_url>"}]
+```
+
+Then poll for results:
+```
+GET https://api.brightdata.com/datasets/v3/snapshot/<snapshot_id>?format=json
+```
 
 ---
 
 ## Troubleshooting
 
 ### "BRIGHTDATA_API_KEY is not set"
-Ensure you've exported the environment variable:
 ```bash
 export BRIGHTDATA_API_KEY="your-api-key"
 ```
 
 ### "BRIGHTDATA_UNLOCKER_ZONE is not set"
-Create a Web Unlocker zone in your [dashboard](https://brightdata.com/cp) and export it:
+Create a Web Unlocker zone in your [dashboard](https://brightdata.com/cp):
 ```bash
 export BRIGHTDATA_UNLOCKER_ZONE="your-zone-name"
 ```
 
+### Data feeds timing out
+Increase the polling timeout:
+```bash
+export BRIGHTDATA_POLLING_TIMEOUT=900
+```
+
 ### Empty or malformed results
 - Verify your API key is valid
-- Check that your zone is active and properly configured
-- Ensure `jq` is installed for JSON processing
+- Check that your zone is active
+- Ensure `jq` is installed
 
 ---
 
@@ -272,6 +377,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Dashboard](https://brightdata.com/cp) - Manage your account
 - [Web Unlocker](https://brightdata.com/products/web-unlocker) - Learn about Web Unlocker
 - [SERP API](https://brightdata.com/products/serp-api) - Learn about SERP API
+- [Web Data APIs](https://brightdata.com/products/web-scraper) - Learn about Web Data APIs
 
 ---
 

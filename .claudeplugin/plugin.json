@@ -1,6 +1,6 @@
 {
   "name": "brightdata-plugin",
-  "description": "Web scraping and Google search skills powered by Bright Data APIs. Includes tools for scraping any webpage as markdown (with bot detection/CAPTCHA bypass) and searching Google with structured JSON results.",
+  "description": "Web scraping, Google search, and structured data extraction powered by Bright Data APIs. Includes 3 skills: scrape any webpage as markdown (with bot detection/CAPTCHA bypass), search Google with structured JSON results, and extract data from 40+ websites (Amazon, LinkedIn, Instagram, TikTok, YouTube, and more).",
   "version": "1.0.0",
   "author": {
     "name": "Bright Data",
@@ -19,7 +19,14 @@
     "bright-data",
     "web-unlocker",
     "captcha-bypass",
-    "claude-code"
+    "claude-code",
+    "data-feeds",
+    "linkedin",
+    "amazon",
+    "instagram",
+    "tiktok",
+    "youtube",
+    "facebook"
   ],
   "dependencies": {
     "curl": ">=7.0.0",
