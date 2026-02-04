@@ -4,14 +4,13 @@
   "version": "1.0.0",
   "author": {
     "name": "Bright Data",
+    "email": "support@brightdata.com",
     "url": "https://brightdata.com"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/brightdata/brightdata-plugin"
-  },
+  "repository": "https://github.com/brightdata/brightdata-plugin",
   "homepage": "https://brightdata.com",
   "license": "MIT",
+  "skills": "./skills/",
   "keywords": [
     "web-scraping",
     "search",
