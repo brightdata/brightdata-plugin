@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Official Bright Data plugin for Claude Code - Web scraping, search, and structured data extraction",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "brightdata-plugin",
       "source": "./",
-      "description": "Web scraping, Google search, and structured data extraction powered by Bright Data APIs. Includes 3 skills: scrape any webpage as markdown (with bot detection/CAPTCHA bypass), search Google with structured JSON results, and extract data from 40+ websites (Amazon, LinkedIn, Instagram, TikTok, YouTube, and more).",
-      "version": "1.0.0",
+      "description": "Web scraping, Google search, structured data extraction, and MCP server integration powered by Bright Data. Includes 4 skills: scrape any webpage as markdown (with bot detection/CAPTCHA bypass), search Google with structured JSON results, extract data from 40+ websites (Amazon, LinkedIn, Instagram, TikTok, YouTube, and more), and orchestrate Bright Data's 60+ MCP tools for search, scraping, structured extraction, and browser automation.",
+      "version": "1.1.0",
       "author": {
         "name": "Bright Data",
         "email": "support@brightdata.com",
@@ -30,6 +30,10 @@
         "web-unlocker",
         "captcha-bypass",
         "data-feeds",
+        "mcp",
+        "mcp-server",
+        "browser-automation",
+        "structured-data",
         "linkedin",
         "amazon",
         "instagram",
@@ -43,7 +47,9 @@
         "data-extraction",
         "search",
         "serp",
-        "structured-data"
+        "structured-data",
+        "mcp",
+        "browser-automation"
       ]
     }
   ]

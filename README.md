@@ -11,14 +11,16 @@
 <p align="center">
   <a href="https://brightdata.com"><img src="https://img.shields.io/badge/Powered%20by-Bright%20Data-3D7FFC?style=for-the-badge" alt="Powered by Bright Data"></a>
   <a href="#license"><img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="MIT License"></a>
-  <a href="#skills"><img src="https://img.shields.io/badge/Skills-3-9D97F4?style=for-the-badge" alt="3 Skills"></a>
+  <a href="#skills"><img src="https://img.shields.io/badge/Skills-4-9D97F4?style=for-the-badge" alt="4 Skills"></a>
   <a href="#data-feeds-skill"><img src="https://img.shields.io/badge/Datasets-40+-15C1E6?style=for-the-badge" alt="40+ Datasets"></a>
+  <a href="#bright-data-mcp-skill"><img src="https://img.shields.io/badge/MCP_Tools-60+-FF6B35?style=for-the-badge" alt="60+ MCP Tools"></a>
 </p>
 
 <p align="center">
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-skills">Skills</a> •
   <a href="#-data-feeds">Data Feeds</a> •
+  <a href="#bright-data-mcp-skill">MCP</a> •
   <a href="#-setup">Setup</a> •
   <a href="#-examples">Examples</a>
 </p>
@@ -32,6 +34,7 @@ This plugin brings **Bright Data's powerful web infrastructure** directly into C
 - **Scrape any webpage** as clean markdown — bypassing bot detection, CAPTCHAs, and JavaScript rendering
 - **Search Google** with structured JSON results — titles, links, and descriptions ready for processing
 - **Extract structured data** from 40+ websites — Amazon, LinkedIn, Instagram, TikTok, YouTube, and more
+- **Orchestrate 60+ MCP tools** — search, scrape, extract structured data, and automate browsers via Bright Data's MCP server
 
 Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlocker), [SERP API](https://brightdata.com/products/serp-api), and [Web Data APIs](https://brightdata.com/products/web-scraper), this plugin handles the complexity of web access so your AI agents can focus on what matters.
 
@@ -44,6 +47,7 @@ Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlock
 | **`search`** | Search Google and get structured JSON results with titles, links, and descriptions |
 | **`scrape`** | Scrape any webpage as clean markdown with automatic bot detection bypass |
 | **`data-feeds`** | Extract structured data from 40+ websites with automatic polling |
+| **`bright-data-mcp`** | Orchestrate 60+ Bright Data MCP tools for search, scraping, structured extraction, and browser automation |
 
 ---
 
@@ -75,6 +79,69 @@ bash skills/scrape/scripts/scrape.sh "https://example.com/article"
 # Get LinkedIn profile data
 bash skills/data-feeds/scripts/datasets.sh linkedin_person_profile "https://linkedin.com/in/satyanadella"
 ```
+
+---
+
+## Bright Data MCP Skill
+
+The `bright-data-mcp` skill teaches Claude how to optimally use Bright Data's MCP server — selecting the right tool, handling errors, and following best practices across 60+ tools.
+
+### MCP Server Connection
+
+Connect the Bright Data MCP server using the remote URL:
+
+```
+https://mcp.brightdata.com/mcp?token=YOUR_BRIGHTDATA_API_TOKEN
+```
+
+**Optional parameters:**
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `pro=1` | Enable all 60+ Pro tools | `...&pro=1` |
+| `groups=<name>` | Enable specific tool groups | `...&groups=social,ecommerce` |
+| `tools=<names>` | Enable specific tools only | `...&tools=search_engine,scrape_as_markdown` |
+
+### Available Tool Groups
+
+| Group | Tools | Platforms |
+|-------|-------|-----------|
+| **Rapid (Free)** | `search_engine`, `scrape_as_markdown` | Google/Bing/Yandex search, any webpage |
+| **ecommerce** | 11 tools | Amazon, Walmart, eBay, Best Buy, Etsy, Home Depot, Zara, Google Shopping |
+| **social** | 22 tools | LinkedIn, Instagram, Facebook, TikTok, YouTube, X, Reddit |
+| **business** | 4 tools | Crunchbase, ZoomInfo, Google Maps, Zillow |
+| **finance** | 1 tool | Yahoo Finance |
+| **research** | 2 tools | Reuters, GitHub |
+| **app_stores** | 2 tools | Google Play, Apple App Store |
+| **travel** | 1 tool | Booking.com |
+| **browser** | 13 tools | Full browser automation (navigate, click, type, screenshot) |
+| **advanced_scraping** | 5 tools | HTML scraping, AI extraction, batch operations |
+
+### Claude Code Setup
+
+Add to your MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "brightdata": {
+      "url": "https://mcp.brightdata.com/mcp?token=YOUR_TOKEN&pro=1"
+    }
+  }
+}
+```
+
+### Why This Skill Matters
+
+The `bright-data-mcp` skill ensures Bright Data MCP is **always the default for all web data tasks** — replacing built-in tools like WebFetch and WebSearch with superior alternatives that handle bot detection, CAPTCHAs, and JavaScript rendering automatically.
+
+With this skill:
+- **Default web tool** — Claude always uses Bright Data MCP for any web data request, no exceptions
+- **Replaces built-in tools** — `search_engine` replaces WebSearch, `scrape_as_markdown` replaces WebFetch
+- **Automatic tool selection** — the most specific tool is chosen based on the task
+- **Structured data preferred** — `web_data_*` tools used over raw scraping when available
+- **Error handling** — built-in fallback strategies and URL validation guidance
+- **Workflow orchestration** — multi-step workflows for research, competitive analysis, social monitoring, and lead generation
 
 ---
 
@@ -270,8 +337,9 @@ bash skills/data-feeds/scripts/datasets.sh crunchbase_company "https://crunchbas
 
 ```
 brightdata-plugin/
-├── .claudeplugin/
-│   └── plugin.json              # Plugin configuration
+├── .claude-plugin/
+│   ├── plugin.json              # Plugin configuration
+│   └── marketplace.json         # Marketplace metadata
 ├── skills/
 │   ├── search/
 │   │   ├── SKILL.md             # Search skill documentation
@@ -281,11 +349,16 @@ brightdata-plugin/
 │   │   ├── SKILL.md             # Scrape skill documentation
 │   │   └── scripts/
 │   │       └── scrape.sh        # Web scraper implementation
-│   └── data-feeds/
-│       ├── SKILL.md             # Data feeds documentation
-│       └── scripts/
-│           ├── datasets.sh      # Dataset wrapper (40+ sources)
-│           └── fetch.sh         # Core polling logic
+│   ├── data-feeds/
+│   │   ├── SKILL.md             # Data feeds documentation
+│   │   └── scripts/
+│   │       ├── datasets.sh      # Dataset wrapper (40+ sources)
+│   │       └── fetch.sh         # Core polling logic
+│   └── bright-data-mcp/
+│       ├── SKILL.md             # MCP workflow guide
+│       └── references/
+│           ├── mcp-tools.md     # Complete MCP tool reference (60+ tools)
+│           └── mcp-setup.md     # MCP server setup guide
 ├── README.md
 └── LICENSE
 ```
@@ -378,6 +451,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Web Unlocker](https://brightdata.com/products/web-unlocker) - Learn about Web Unlocker
 - [SERP API](https://brightdata.com/products/serp-api) - Learn about SERP API
 - [Web Data APIs](https://brightdata.com/products/web-scraper) - Learn about Web Data APIs
+- [MCP Server](https://docs.brightdata.com) - MCP server documentation
+- [MCP Tools Reference](skills/bright-data-mcp/references/mcp-tools.md) - Complete tool reference
 
 ---
 
