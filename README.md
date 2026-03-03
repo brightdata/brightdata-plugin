@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://brightdata.com"><img src="https://img.shields.io/badge/Powered%20by-Bright%20Data-3D7FFC?style=for-the-badge" alt="Powered by Bright Data"></a>
   <a href="#license"><img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="MIT License"></a>
-  <a href="#skills"><img src="https://img.shields.io/badge/Skills-4-9D97F4?style=for-the-badge" alt="4 Skills"></a>
+  <a href="#skills"><img src="https://img.shields.io/badge/Skills-5-9D97F4?style=for-the-badge" alt="5 Skills"></a>
   <a href="#data-feeds-skill"><img src="https://img.shields.io/badge/Datasets-40+-15C1E6?style=for-the-badge" alt="40+ Datasets"></a>
   <a href="#bright-data-mcp-skill"><img src="https://img.shields.io/badge/MCP_Tools-60+-FF6B35?style=for-the-badge" alt="60+ MCP Tools"></a>
 </p>
@@ -21,6 +21,7 @@
   <a href="#-skills">Skills</a> •
   <a href="#-data-feeds">Data Feeds</a> •
   <a href="#bright-data-mcp-skill">MCP</a> •
+  <a href="#best-practices-skill">Best Practices</a> •
   <a href="#-setup">Setup</a> •
   <a href="#-examples">Examples</a>
 </p>
@@ -35,6 +36,7 @@ This plugin brings **Bright Data's powerful web infrastructure** directly into C
 - **Search Google** with structured JSON results — titles, links, and descriptions ready for processing
 - **Extract structured data** from 40+ websites — Amazon, LinkedIn, Instagram, TikTok, YouTube, and more
 - **Orchestrate 60+ MCP tools** — search, scrape, extract structured data, and automate browsers via Bright Data's MCP server
+- **Write correct Bright Data code** — built-in best practices for Web Unlocker, SERP API, Web Scraper API, and Browser API
 
 Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlocker), [SERP API](https://brightdata.com/products/serp-api), and [Web Data APIs](https://brightdata.com/products/web-scraper), this plugin handles the complexity of web access so your AI agents can focus on what matters.
 
@@ -48,6 +50,7 @@ Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlock
 | **`scrape`** | Scrape any webpage as clean markdown with automatic bot detection bypass |
 | **`data-feeds`** | Extract structured data from 40+ websites with automatic polling |
 | **`bright-data-mcp`** | Orchestrate 60+ Bright Data MCP tools for search, scraping, structured extraction, and browser automation |
+| **`bright-data-best-practices`** | Built-in reference for Web Unlocker, SERP API, Web Scraper API, and Browser API — Claude consults this automatically when writing Bright Data code |
 
 ---
 
@@ -142,6 +145,32 @@ With this skill:
 - **Structured data preferred** — `web_data_*` tools used over raw scraping when available
 - **Error handling** — built-in fallback strategies and URL validation guidance
 - **Workflow orchestration** — multi-step workflows for research, competitive analysis, social monitoring, and lead generation
+
+---
+
+## Best Practices Skill
+
+The `bright-data-best-practices` skill is a **reference knowledge base** that Claude consults automatically when writing or reviewing Bright Data code. It is not a slash command — it works silently in the background.
+
+### What it covers
+
+| API | Key topics |
+|-----|-----------|
+| **Web Unlocker** | All request parameters, special headers (`x-unblock-expect`, `x-unblock-data-format`), async flow, billing model, anti-patterns |
+| **SERP API** | All Google params (Search, Maps, Trends, Reviews, Lens, Hotels, Flights), Bing params, `brd_json=1` parsed output, async with `x-response-id` |
+| **Web Scraper API** | Sync `/scrape` vs async `/trigger`, progress polling, status values, snapshot lifecycle, output formats |
+| **Browser API** | Connection strings by framework, session rules, all custom CDP functions (`Captcha.solve`, `Proxy.setLocation`, `Emulation.setDevice`, etc.), bandwidth optimization |
+
+### How it works
+
+The skill has `user-invocable: false` — it never appears in the `/` command menu. Instead, Claude loads its reference material when you ask it to write Bright Data integrations, ensuring generated code uses correct endpoints, real parameter names, and proper patterns.
+
+### Reference files
+
+- [skills/bright-data-best-practices/references/web-unlocker.md](skills/bright-data-best-practices/references/web-unlocker.md)
+- [skills/bright-data-best-practices/references/serp-api.md](skills/bright-data-best-practices/references/serp-api.md)
+- [skills/bright-data-best-practices/references/web-scraper-api.md](skills/bright-data-best-practices/references/web-scraper-api.md)
+- [skills/bright-data-best-practices/references/browser-api.md](skills/bright-data-best-practices/references/browser-api.md)
 
 ---
 
@@ -342,23 +371,30 @@ brightdata-plugin/
 │   └── marketplace.json         # Marketplace metadata
 ├── skills/
 │   ├── search/
-│   │   ├── SKILL.md             # Search skill documentation
+│   │   ├── SKILL.md             # Search skill
 │   │   └── scripts/
 │   │       └── search.sh        # Google search implementation
 │   ├── scrape/
-│   │   ├── SKILL.md             # Scrape skill documentation
+│   │   ├── SKILL.md             # Scrape skill
 │   │   └── scripts/
 │   │       └── scrape.sh        # Web scraper implementation
 │   ├── data-feeds/
-│   │   ├── SKILL.md             # Data feeds documentation
+│   │   ├── SKILL.md             # Data feeds skill
 │   │   └── scripts/
 │   │       ├── datasets.sh      # Dataset wrapper (40+ sources)
 │   │       └── fetch.sh         # Core polling logic
-│   └── bright-data-mcp/
-│       ├── SKILL.md             # MCP workflow guide
+│   ├── bright-data-mcp/
+│   │   ├── SKILL.md             # MCP workflow guide
+│   │   └── references/
+│   │       ├── mcp-tools.md     # Complete MCP tool reference (60+ tools)
+│   │       └── mcp-setup.md     # MCP server setup guide
+│   └── bright-data-best-practices/
+│       ├── SKILL.md             # API best practices (user-invocable: false)
 │       └── references/
-│           ├── mcp-tools.md     # Complete MCP tool reference (60+ tools)
-│           └── mcp-setup.md     # MCP server setup guide
+│           ├── web-unlocker.md  # Web Unlocker API deep reference
+│           ├── serp-api.md      # SERP API deep reference
+│           ├── web-scraper-api.md  # Web Scraper API deep reference
+│           └── browser-api.md   # Browser API deep reference
 ├── README.md
 └── LICENSE
 ```
@@ -453,6 +489,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Web Data APIs](https://brightdata.com/products/web-scraper) - Learn about Web Data APIs
 - [MCP Server](https://docs.brightdata.com) - MCP server documentation
 - [MCP Tools Reference](skills/bright-data-mcp/references/mcp-tools.md) - Complete tool reference
+- [Web Unlocker Best Practices](skills/bright-data-best-practices/references/web-unlocker.md) - Parameters, headers, async, billing
+- [SERP API Best Practices](skills/bright-data-best-practices/references/serp-api.md) - All query params, parsed JSON, async
+- [Web Scraper API Best Practices](skills/bright-data-best-practices/references/web-scraper-api.md) - Sync/async, polling, formats
+- [Browser API Best Practices](skills/bright-data-best-practices/references/browser-api.md) - CDP functions, geo, bandwidth
 
 ---
 
