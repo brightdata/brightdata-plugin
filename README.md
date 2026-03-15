@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://brightdata.com"><img src="https://img.shields.io/badge/Powered%20by-Bright%20Data-3D7FFC?style=for-the-badge" alt="Powered by Bright Data"></a>
   <a href="#license"><img src="https://img.shields.io/badge/License-MIT-10b981?style=for-the-badge" alt="MIT License"></a>
-  <a href="#skills"><img src="https://img.shields.io/badge/Skills-5-9D97F4?style=for-the-badge" alt="5 Skills"></a>
+  <a href="#skills"><img src="https://img.shields.io/badge/Skills-7-9D97F4?style=for-the-badge" alt="7 Skills"></a>
   <a href="#data-feeds-skill"><img src="https://img.shields.io/badge/Datasets-40+-15C1E6?style=for-the-badge" alt="40+ Datasets"></a>
   <a href="#bright-data-mcp-skill"><img src="https://img.shields.io/badge/MCP_Tools-60+-FF6B35?style=for-the-badge" alt="60+ MCP Tools"></a>
 </p>
@@ -22,6 +22,7 @@
   <a href="#-data-feeds">Data Feeds</a> •
   <a href="#bright-data-mcp-skill">MCP</a> •
   <a href="#best-practices-skill">Best Practices</a> •
+  <a href="#python-sdk-best-practices-skill">Python SDK</a> •
   <a href="#-setup">Setup</a> •
   <a href="#-examples">Examples</a>
 </p>
@@ -37,6 +38,7 @@ This plugin brings **Bright Data's powerful web infrastructure** directly into C
 - **Extract structured data** from 40+ websites — Amazon, LinkedIn, Instagram, TikTok, YouTube, and more
 - **Orchestrate 60+ MCP tools** — search, scrape, extract structured data, and automate browsers via Bright Data's MCP server
 - **Write correct Bright Data code** — built-in best practices for Web Unlocker, SERP API, Web Scraper API, and Browser API
+- **Build with the Python SDK** — comprehensive guide for the `brightdata-sdk` package with patterns for async/sync clients, platform scrapers, SERP, datasets, and more
 
 Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlocker), [SERP API](https://brightdata.com/products/serp-api), and [Web Data APIs](https://brightdata.com/products/web-scraper), this plugin handles the complexity of web access so your AI agents can focus on what matters.
 
@@ -51,6 +53,8 @@ Built on Bright Data's [Web Unlocker](https://brightdata.com/products/web-unlock
 | **`data-feeds`** | Extract structured data from 40+ websites with automatic polling |
 | **`bright-data-mcp`** | Orchestrate 60+ Bright Data MCP tools for search, scraping, structured extraction, and browser automation |
 | **`bright-data-best-practices`** | Built-in reference for Web Unlocker, SERP API, Web Scraper API, and Browser API — Claude consults this automatically when writing Bright Data code |
+| **`python-sdk-best-practices`** | Comprehensive guide for the `brightdata-sdk` Python package — async/sync clients, platform scrapers, SERP, datasets, Scraper Studio, Browser API, error handling, and common patterns |
+| **`design-mirror`** | Replicates design system patterns, tokens, and components to build consistent, high-quality UIs |
 
 ---
 
@@ -171,6 +175,31 @@ The skill has `user-invocable: false` — it never appears in the `/` command me
 - [skills/bright-data-best-practices/references/serp-api.md](skills/bright-data-best-practices/references/serp-api.md)
 - [skills/bright-data-best-practices/references/web-scraper-api.md](skills/bright-data-best-practices/references/web-scraper-api.md)
 - [skills/bright-data-best-practices/references/browser-api.md](skills/bright-data-best-practices/references/browser-api.md)
+
+---
+
+## Python SDK Best Practices Skill
+
+The `python-sdk-best-practices` skill is a comprehensive guide for writing correct code with the `brightdata-sdk` Python package. Claude consults this automatically when writing, modifying, or reviewing Python code that uses the Bright Data SDK.
+
+### What it covers
+
+| Topic | Details |
+|-------|---------|
+| **Client setup** | Async (`BrightDataClient`) and sync (`SyncBrightDataClient`) clients, context managers, authentication |
+| **Platform scrapers** | Amazon, LinkedIn, Instagram, Facebook, YouTube, ChatGPT, TikTok, Reddit — URL-based and keyword search |
+| **SERP API** | Google, Bing, Yandex search with location, language, device, and async mode |
+| **Datasets API** | 175+ pre-collected datasets with filter, download, sample, and export |
+| **Scraper Studio** | Custom scraper execution with trigger/poll/fetch lifecycle |
+| **Browser API** | CDP WebSocket URLs for Playwright/Puppeteer automation |
+| **Error handling** | Full exception hierarchy with `APIError.status_code`, `APIError.response_text` |
+| **Batch operations** | Concurrent scraping with `asyncio.gather()` |
+| **Common mistakes** | Forgetting context managers, sync in async, missing `await`, hardcoded tokens |
+
+### Reference files
+
+- [skills/python-sdk-best-practices/SKILL.md](skills/python-sdk-best-practices/SKILL.md) — Core patterns and best practices
+- [skills/python-sdk-best-practices/references/api-reference.md](skills/python-sdk-best-practices/references/api-reference.md) — Full API surface, service hierarchy, payload models, constants
 
 ---
 
@@ -388,13 +417,20 @@ brightdata-plugin/
 │   │   └── references/
 │   │       ├── mcp-tools.md     # Complete MCP tool reference (60+ tools)
 │   │       └── mcp-setup.md     # MCP server setup guide
-│   └── bright-data-best-practices/
-│       ├── SKILL.md             # API best practices (user-invocable: false)
-│       └── references/
-│           ├── web-unlocker.md  # Web Unlocker API deep reference
-│           ├── serp-api.md      # SERP API deep reference
-│           ├── web-scraper-api.md  # Web Scraper API deep reference
-│           └── browser-api.md   # Browser API deep reference
+│   ├── bright-data-best-practices/
+│   │   ├── SKILL.md             # API best practices (user-invocable: false)
+│   │   └── references/
+│   │       ├── web-unlocker.md  # Web Unlocker API deep reference
+│   │       ├── serp-api.md      # SERP API deep reference
+│   │       ├── web-scraper-api.md  # Web Scraper API deep reference
+│   │       └── browser-api.md   # Browser API deep reference
+│   ├── python-sdk-best-practices/
+│   │   ├── SKILL.md             # Python SDK patterns and best practices
+│   │   └── references/
+│   │       └── api-reference.md # Full API surface, payloads, constants
+│   └── design-mirror/
+│       └── SKILL.md             # Design system mirroring skill
+├── sdk-python/                  # Bright Data Python SDK source
 ├── README.md
 └── LICENSE
 ```
@@ -493,6 +529,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [SERP API Best Practices](skills/bright-data-best-practices/references/serp-api.md) - All query params, parsed JSON, async
 - [Web Scraper API Best Practices](skills/bright-data-best-practices/references/web-scraper-api.md) - Sync/async, polling, formats
 - [Browser API Best Practices](skills/bright-data-best-practices/references/browser-api.md) - CDP functions, geo, bandwidth
+- [Python SDK Best Practices](skills/python-sdk-best-practices/SKILL.md) - Async/sync clients, scrapers, SERP, datasets
+- [Python SDK API Reference](skills/python-sdk-best-practices/references/api-reference.md) - Full API surface, payloads, constants
 
 ---
 
